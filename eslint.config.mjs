@@ -26,13 +26,13 @@ const eslintConfig = defineConfig([
             tailwindcss: {
                 callees: ["twMerge", "createTheme", "cn", "clsx", "classnames", "ctl"],
                 classRegex: "^(class(Name)?|theme)$",
-                config: "tailwind.config.js",
+                config: false,
                 cssFiles: ["**/*.css", "!**/node_modules", "!**/.*", "!**/dist", "!**/build"],
                 cssFilesRefreshRate: 5_000,
                 removeDuplicates: true,
                 skipClassAttribute: false,
-                tags: [], // Set to ['tw'] if using twin.macro
-                whitelist: [], // Add custom classnames here if needed
+                tags: [],
+                whitelist: [],
             },
         },
     },
@@ -53,32 +53,24 @@ const eslintConfig = defineConfig([
             },
         },
         rules: {
-            // ============================================
-            // Tailwind CSS Rules (All with auto-fix enabled)
-            // ============================================
-            "tailwindcss/classnames-order": "warn", // AUTO-FIX: Orders classnames for consistency
-            "tailwindcss/enforces-negative-arbitrary-values": "warn", // AUTO-FIX: top-[-5px] instead of -top-[5px]
-            "tailwindcss/enforces-shorthand": "warn", // AUTO-FIX: m-5 instead of mx-5 my-5
-            "tailwindcss/migration-from-tailwind-2": "warn", // AUTO-FIX: Migrates from v2 to v3
-            "tailwindcss/no-arbitrary-value": "off", // Allows arbitrary values like [#fff]
-            "tailwindcss/no-custom-classname": "warn", // AUTO-FIX: Only allows Tailwind classnames
-            "tailwindcss/no-contradicting-classname": "error", // AUTO-FIX: Prevents p-2 p-3 conflicts
-            "tailwindcss/no-unnecessary-arbitrary-value": "warn", // AUTO-FIX: m-5 instead of m-[1.25rem]
-
-            // ============================================
-            // Import & Sorting Rules
-            // ============================================
+            "tailwindcss/classnames-order": "warn",
+            "tailwindcss/enforces-negative-arbitrary-values": "warn",
+            "tailwindcss/enforces-shorthand": "warn",
+            "tailwindcss/migration-from-tailwind-2": "warn",
+            "tailwindcss/no-arbitrary-value": "off",
+            "tailwindcss/no-contradicting-classname": "error",
+            "tailwindcss/no-unnecessary-arbitrary-value": "warn",
             "simple-import-sort/imports": [
                 "error",
                 {
                     groups: [
-                        ["^\\u0000"], // Side effects
-                        ["^node:"], // Node.js built-ins
-                        ["^@?\\w"], // External packages
-                        ["^(@|@/)"], // Absolute imports with @ prefix
-                        ["^\\.\\.(?!/?$)", "^\\.\\./?$"], // Parent directory imports
-                        ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"], // Relative imports
-                        ["^.+\\.s?css$"], // CSS/SCSS imports
+                        ["^\\u0000"],
+                        ["^node:"],
+                        ["^@?\\w"],
+                        ["^(@|@/)"],
+                        ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+                        ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+                        ["^.+\\.s?css$"],
                     ],
                 },
             ],
@@ -86,9 +78,6 @@ const eslintConfig = defineConfig([
             "import/order": "off",
             "sort-imports": "off",
 
-            // ============================================
-            // React & JSX Rules
-            // ============================================
             "perfectionist/sort-jsx-props": [
                 "error",
                 {
@@ -99,9 +88,6 @@ const eslintConfig = defineConfig([
                 },
             ],
 
-            // ============================================
-            // Code Quality Rules
-            // ============================================
             "prettier/prettier": "error",
             "consistent-this": "warn",
             "no-duplicate-imports": "error",

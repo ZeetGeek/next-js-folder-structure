@@ -5,7 +5,9 @@ import prettierConfig from "eslint-config-prettier";
 import importPlugin from "eslint-plugin-import";
 import perfectionist from "eslint-plugin-perfectionist";
 import prettierPlugin from "eslint-plugin-prettier/recommended";
+import simpleImportSort from "eslint-plugin-simple-import-sort";
 import sortKeysFix from "eslint-plugin-sort-keys-fix";
+import tailwindcss from "eslint-plugin-tailwindcss";
 import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
 
@@ -23,6 +25,8 @@ const eslintConfig = defineConfig([
         plugins: {
             import: importPlugin,
             perfectionist,
+            "simple-import-sort": simpleImportSort,
+            tailwindcss,
         },
         settings: {
             "import/resolver": {
@@ -30,6 +34,12 @@ const eslintConfig = defineConfig([
                     alwaysTryTypes: true,
                     project: "./tsconfig.json",
                 },
+            },
+            tailwindcss: {
+                // Note: Tailwind v4 uses CSS-first config, so config resolution may show warnings
+                // The plugin will still validate classnames without a config file
+                callees: ["twMerge", "createTheme", "cn", "clsx"],
+                classRegex: "^(class(Name)?|theme)$",
             },
         },
     },
@@ -45,9 +55,45 @@ const eslintConfig = defineConfig([
         },
         plugins: {
             import: importPlugin,
+            "simple-import-sort": simpleImportSort,
             "sort-keys-fix": sortKeysFix,
+            tailwindcss,
         },
         rules: {
+            // Tailwind CSS rules
+            "tailwindcss/classnames-order": "warn",
+            "tailwindcss/enforces-negative-arbitrary-values": "warn",
+            "tailwindcss/enforces-shorthand": "warn",
+            "tailwindcss/migration-from-tailwind-2": "warn",
+            "tailwindcss/no-arbitrary-value": "off",
+            "tailwindcss/no-custom-classname": "warn",
+            "tailwindcss/no-contradicting-classname": "error",
+            // Simple import sort rules
+            "simple-import-sort/imports": [
+                "error",
+                {
+                    groups: [
+                        // Side effect imports
+                        ["^\\u0000"],
+                        // Node.js built-ins
+                        ["^node:"],
+                        // External packages
+                        ["^@?\\w"],
+                        // Internal packages (absolute imports)
+                        ["^(@|@/)"],
+                        // Parent imports
+                        ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+                        // Other relative imports
+                        ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+                        // Style imports
+                        ["^.+\\.s?css$"],
+                    ],
+                },
+            ],
+            "simple-import-sort/exports": "error",
+            // Disable conflicting import rules
+            "import/order": "off",
+            "sort-imports": "off",
             "perfectionist/sort-jsx-props": [
                 "error",
                 {

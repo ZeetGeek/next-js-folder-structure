@@ -22,78 +22,73 @@ const eslintConfig = defineConfig([
 
     {
         files: ["**/*.{js,jsx,ts,tsx}"],
-        plugins: {
-            import: importPlugin,
-            perfectionist,
-            "simple-import-sort": simpleImportSort,
-            tailwindcss,
-        },
         settings: {
-            "import/resolver": {
-                typescript: {
-                    alwaysTryTypes: true,
-                    project: "./tsconfig.json",
-                },
-            },
             tailwindcss: {
-                // Note: Tailwind v4 uses CSS-first config, so config resolution may show warnings
-                // The plugin will still validate classnames without a config file
-                callees: ["twMerge", "createTheme", "cn", "clsx"],
+                callees: ["twMerge", "createTheme", "cn", "clsx", "classnames", "ctl"],
                 classRegex: "^(class(Name)?|theme)$",
+                config: "tailwind.config.js",
+                cssFiles: ["**/*.css", "!**/node_modules", "!**/.*", "!**/dist", "!**/build"],
+                cssFilesRefreshRate: 5_000,
+                removeDuplicates: true,
+                skipClassAttribute: false,
+                tags: [], // Set to ['tw'] if using twin.macro
+                whitelist: [], // Add custom classnames here if needed
             },
         },
     },
 
-    // Main rules configuration
     {
         files: ["**/*.{js,jsx,ts,tsx}"],
+        plugins: {
+            import: importPlugin,
+            perfectionist,
+            "simple-import-sort": simpleImportSort,
+            "sort-keys-fix": sortKeysFix,
+            tailwindcss,
+        },
         languageOptions: {
             globals: {
                 ...globals.browser,
                 ...globals.node,
             },
         },
-        plugins: {
-            import: importPlugin,
-            "simple-import-sort": simpleImportSort,
-            "sort-keys-fix": sortKeysFix,
-            tailwindcss,
-        },
         rules: {
-            // Tailwind CSS rules
-            "tailwindcss/classnames-order": "warn",
-            "tailwindcss/enforces-negative-arbitrary-values": "warn",
-            "tailwindcss/enforces-shorthand": "warn",
-            "tailwindcss/migration-from-tailwind-2": "warn",
-            "tailwindcss/no-arbitrary-value": "off",
-            "tailwindcss/no-custom-classname": "warn",
-            "tailwindcss/no-contradicting-classname": "error",
-            // Simple import sort rules
+            // ============================================
+            // Tailwind CSS Rules (All with auto-fix enabled)
+            // ============================================
+            "tailwindcss/classnames-order": "warn", // AUTO-FIX: Orders classnames for consistency
+            "tailwindcss/enforces-negative-arbitrary-values": "warn", // AUTO-FIX: top-[-5px] instead of -top-[5px]
+            "tailwindcss/enforces-shorthand": "warn", // AUTO-FIX: m-5 instead of mx-5 my-5
+            "tailwindcss/migration-from-tailwind-2": "warn", // AUTO-FIX: Migrates from v2 to v3
+            "tailwindcss/no-arbitrary-value": "off", // Allows arbitrary values like [#fff]
+            "tailwindcss/no-custom-classname": "warn", // AUTO-FIX: Only allows Tailwind classnames
+            "tailwindcss/no-contradicting-classname": "error", // AUTO-FIX: Prevents p-2 p-3 conflicts
+            "tailwindcss/no-unnecessary-arbitrary-value": "warn", // AUTO-FIX: m-5 instead of m-[1.25rem]
+
+            // ============================================
+            // Import & Sorting Rules
+            // ============================================
             "simple-import-sort/imports": [
                 "error",
                 {
                     groups: [
-                        // Side effect imports
-                        ["^\\u0000"],
-                        // Node.js built-ins
-                        ["^node:"],
-                        // External packages
-                        ["^@?\\w"],
-                        // Internal packages (absolute imports)
-                        ["^(@|@/)"],
-                        // Parent imports
-                        ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
-                        // Other relative imports
-                        ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
-                        // Style imports
-                        ["^.+\\.s?css$"],
+                        ["^\\u0000"], // Side effects
+                        ["^node:"], // Node.js built-ins
+                        ["^@?\\w"], // External packages
+                        ["^(@|@/)"], // Absolute imports with @ prefix
+                        ["^\\.\\.(?!/?$)", "^\\.\\./?$"], // Parent directory imports
+                        ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"], // Relative imports
+                        ["^.+\\.s?css$"], // CSS/SCSS imports
                     ],
                 },
             ],
             "simple-import-sort/exports": "error",
-            // Disable conflicting import rules
             "import/order": "off",
             "sort-imports": "off",
+
+            // ============================================
+            // React & JSX Rules
+            // ============================================
             "perfectionist/sort-jsx-props": [
                 "error",
                 {
@@ -103,6 +98,10 @@ const eslintConfig = defineConfig([
                     specialCharacters: "keep",
                 },
             ],
+
+            // ============================================
+            // Code Quality Rules
+            // ============================================
             "prettier/prettier": "error",
             "consistent-this": "warn",
             "no-duplicate-imports": "error",

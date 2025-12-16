@@ -1,10 +1,12 @@
 // eslint.config.mjs
-import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 import prettierConfig from "eslint-config-prettier";
-import prettierPlugin from "eslint-plugin-prettier/recommended";
 import importPlugin from "eslint-plugin-import";
+import perfectionist from "eslint-plugin-perfectionist";
+import prettierPlugin from "eslint-plugin-prettier/recommended";
+import sortKeysFix from "eslint-plugin-sort-keys-fix";
+import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
 
 const eslintConfig = defineConfig([
@@ -13,15 +15,14 @@ const eslintConfig = defineConfig([
 
     globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts", "node_modules/**", "dist/**"]),
 
-    // Prettier config (must come before custom rules)
     prettierConfig,
     prettierPlugin,
 
-    // Import plugin configuration
     {
         files: ["**/*.{js,jsx,ts,tsx}"],
         plugins: {
             import: importPlugin,
+            perfectionist,
         },
         settings: {
             "import/resolver": {
@@ -44,8 +45,18 @@ const eslintConfig = defineConfig([
         },
         plugins: {
             import: importPlugin,
+            "sort-keys-fix": sortKeysFix,
         },
         rules: {
+            "perfectionist/sort-jsx-props": [
+                "error",
+                {
+                    type: "alphabetical",
+                    order: "asc",
+                    ignoreCase: true,
+                    specialCharacters: "keep",
+                },
+            ],
             "prettier/prettier": "error",
             "consistent-this": "warn",
             "no-duplicate-imports": "error",
@@ -57,7 +68,15 @@ const eslintConfig = defineConfig([
             "arrow-body-style": ["warn", "always"],
             "block-scoped-var": "warn",
             "no-use-before-define": "warn",
-            camelcase: ["error", { properties: "always" }],
+            camelcase: [
+                "error",
+                {
+                    properties: "always",
+                    ignoreDestructuring: false,
+                    ignoreImports: true,
+                    ignoreGlobals: false,
+                },
+            ],
             "capitalized-comments": ["error", "always"],
             "consistent-return": ["error", { treatUndefinedAsUnspecified: true }],
             "no-useless-assignment": "error",
@@ -140,30 +159,16 @@ const eslintConfig = defineConfig([
             "no-var": "error",
             "no-warning-comments": "error",
             "no-with": "error",
-            "one-var": "error",
             "operator-assignment": "error",
             "prefer-const": "error",
             "prefer-template": "error",
             "require-yield": "error",
-            "sort-imports": [
-                "error",
-                {
-                    ignoreCase: false,
-                    ignoreDeclarationSort: false,
-                    ignoreMemberSort: false,
-                    memberSyntaxSortOrder: ["none", "all", "multiple", "single"],
-                    allowSeparatedGroups: false,
-                },
-            ],
-            "sort-keys": [
+            "sort-keys-fix/sort-keys-fix": [
                 "error",
                 "asc",
                 {
                     caseSensitive: true,
                     natural: false,
-                    minKeys: 2,
-                    allowLineSeparatedGroups: false,
-                    ignoreComputedKeys: false,
                 },
             ],
             "sort-vars": [

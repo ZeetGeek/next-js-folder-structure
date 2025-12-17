@@ -23,8 +23,8 @@
             "prettier --write"
         ],
         "*.{css,scss}": [
-            "stylelint --fix --allow-empty-input",
-            "prettier --write"
+            "prettier --write",
+            "stylelint --fix --allow-empty-input"
         ],
         "*.{json,md}": [
             "prettier --write"

@@ -25,8 +25,8 @@ const config = {
             },
         ],
         "scss/at-extend-no-missing-placeholder": null,
-        "scss/dollar-variable-colon-space-after": "always",
-        "scss/dollar-variable-colon-space-before": "never",
+        "scss/dollar-variable-colon-space-after": null,
+        "scss/dollar-variable-colon-space-before": null,
         "scss/double-slash-comment-empty-line-before": null,
         "selector-pseudo-class-no-unknown": [
             true,

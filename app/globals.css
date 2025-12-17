@@ -21,10 +21,6 @@
 
 /* after format */
 body {
-  position: relative;
-  z-index: 10;
-  inline-size: 200rem;
-  block-size: 10rem;
   font-family: Arial, Helvetica, sans-serif;
   color: #fff;
   text-transform: uppercase;

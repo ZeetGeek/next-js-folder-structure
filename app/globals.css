@@ -26,3 +26,8 @@ body {
   text-transform: uppercase;
   background: var(--background);
 }
+
+button {
+  color: var(--foreground);
+  background: var(--background);
+}

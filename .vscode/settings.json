@@ -16,7 +16,21 @@
     "[typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
+    "[css]": {
+        "editor.defaultFormatter": "stylelint.vscode-stylelint",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.stylelint": "always"
+        }
+    },
+    "[scss]": {
+        "editor.defaultFormatter": "stylelint.vscode-stylelint",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.stylelint": "always"
+        }
+    },
     "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
     "eslint.format.enable": true,
-    "prettier.configPath": "./.prettierrc"
+    "prettier.configPath": "./.prettierrc",
+    "stylelint.enable": true,
+    "stylelint.validate": ["css", "scss"]
 }

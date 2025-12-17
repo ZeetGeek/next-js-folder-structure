@@ -19,12 +19,14 @@
   }
 }
 
-
+/* hell word */
 body {
   position: relative;
   z-index: 10;
+  block-size: 100vh;
   font-family: Arial, Helvetica, sans-serif;
   color: #fff;
+  text-transform: uppercase;
   background: var(--background);
 }
 

@@ -3,7 +3,7 @@
 const config = {
     extends: [
         "stylelint-config-standard-scss",
-        "stylelint-config-recess-order",
+        // "stylelint-config-recess-order",
         "stylelint-config-tailwindcss",
         "stylelint-config-sass-guidelines",
         "stylelint-config-prettier-scss",

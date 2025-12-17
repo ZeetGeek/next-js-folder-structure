@@ -145,7 +145,7 @@ const eslintConfig = defineConfig([
             "no-array-constructor": "error",
             "no-bitwise": "error",
             "no-case-declarations": "error",
-            "no-console": "warn",
+            "no-console": "error",
             "no-delete-var": "error",
             "no-div-regex": "error",
             "no-else-return": "error",

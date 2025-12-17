@@ -1,16 +1,16 @@
 {
-    "experimentalTernaries": true,
-    "printWidth": 120,
-    "tabWidth": 4,
-    "arrowParens": "avoid",
-    "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-organize-imports"],
-    "overrides": [
-        {
-            "files": "*.{css,scss}",
-            "options": {
-                "parser": "scss",
-                "singleQuote": false
-            }
-        }
-    ]
+  "experimentalTernaries": true,
+  "printWidth": 120,
+  "tabWidth": 2,
+  "arrowParens": "avoid",
+  "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-organize-imports"],
+  "overrides": [
+    {
+      "files": "*.{css,scss}",
+      "options": {
+        "parser": "scss",
+        "singleQuote": false
+      }
+    }
+  ]
 }

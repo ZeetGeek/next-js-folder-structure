@@ -28,6 +28,4 @@ body {
   background: var(--background);
 }
 
-a {
-  width: calc(10px + 10px);
-}
+

@@ -10,6 +10,7 @@ const config = {
     ],
     plugins: ["stylelint-order"],
     rules: {
+        "color-hex-length": "long",
         "scss/operator-no-newline-before": null,
         "scss/operator-no-unspaced": null,
         "at-rule-no-unknown": [

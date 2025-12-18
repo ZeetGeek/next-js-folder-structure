@@ -1,50 +1,38 @@
 // eslint.config.mjs
+
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 import prettierConfig from "eslint-config-prettier";
+import betterTailwind from "eslint-plugin-better-tailwindcss";
 import importPlugin from "eslint-plugin-import";
 import perfectionist from "eslint-plugin-perfectionist";
 import prettierPlugin from "eslint-plugin-prettier/recommended";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import sortKeysFix from "eslint-plugin-sort-keys-fix";
-import tailwindcss from "eslint-plugin-tailwindcss";
 import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
 
 const eslintConfig = defineConfig([
     ...nextVitals,
     ...nextTs,
-
     globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts", "node_modules/**", "dist/**"]),
-
     prettierConfig,
     prettierPlugin,
-
-    {
-        files: ["**/*.{js,jsx,ts,tsx}"],
-        settings: {
-            tailwindcss: {
-                callees: ["twMerge", "createTheme", "cn", "clsx", "classnames", "ctl"],
-                classRegex: "^(class(Name)?|theme)$",
-                config: false,
-                cssFiles: ["**/*.css", "!**/node_modules", "!**/.*", "!**/dist", "!**/build"],
-                cssFilesRefreshRate: 5_000,
-                removeDuplicates: true,
-                skipClassAttribute: false,
-                tags: [],
-                whitelist: [],
-            },
-        },
-    },
-
     {
         files: ["**/*.{js,jsx,ts,tsx}"],
         plugins: {
+            "better-tailwindcss": betterTailwind,
             import: importPlugin,
             perfectionist,
             "simple-import-sort": simpleImportSort,
             "sort-keys-fix": sortKeysFix,
-            tailwindcss,
+        },
+        settings: {
+            "better-tailwindcss": {
+                // Since you are using Tailwind CSS v4, we specify the entry point.
+                // Make sure this path points to your main global CSS file.
+                entryPoint: "src/app/globals.css",
+            },
         },
         languageOptions: {
             globals: {
@@ -53,13 +41,16 @@ const eslintConfig = defineConfig([
             },
         },
         rules: {
-            "tailwindcss/classnames-order": "warn",
-            "tailwindcss/enforces-negative-arbitrary-values": "warn",
-            "tailwindcss/enforces-shorthand": "warn",
-            "tailwindcss/migration-from-tailwind-2": "warn",
-            "tailwindcss/no-arbitrary-value": "off",
-            "tailwindcss/no-contradicting-classname": "error",
-            "tailwindcss/no-unnecessary-arbitrary-value": "warn",
+            "better-tailwindcss/enforce-consistent-line-wrapping": [
+                "warn",
+                {
+                    printWidth: 120,
+                    preferSingleLine: true,
+                    group: "newLine",
+                },
+            ],
+
+            // Your Other Rules
             "simple-import-sort/imports": [
                 "error",
                 {
@@ -67,9 +58,9 @@ const eslintConfig = defineConfig([
                         ["^\\u0000"],
                         ["^node:"],
                         ["^@?\\w"],
-                        ["^(@|@/)"],
-                        ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
-                        ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+                        ["^(@|@/)(?!.*css$)"],
+                        ["^\\.\\.(?!/?$)(?!.*css$)", "^\\.\\./?$(?!.*css$)"],
+                        ["^\\./(?=.*/)(?!/?$)(?!.*css$)", "^\\.(?!/?$)(?!.*css$)", "^\\./?$(?!.*css$)"],
                         ["^.+\\.s?css$"],
                     ],
                 },
@@ -77,7 +68,6 @@ const eslintConfig = defineConfig([
             "simple-import-sort/exports": "error",
             "import/order": "off",
             "sort-imports": "off",
-
             "perfectionist/sort-jsx-props": [
                 "error",
                 {
@@ -87,7 +77,6 @@ const eslintConfig = defineConfig([
                     specialCharacters: "keep",
                 },
             ],
-
             "prettier/prettier": "error",
             "consistent-this": "warn",
             "no-duplicate-imports": "error",

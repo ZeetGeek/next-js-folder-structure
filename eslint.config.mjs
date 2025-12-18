@@ -49,8 +49,29 @@ const eslintConfig = defineConfig([
                     group: "newLine",
                 },
             ],
-
-            // Your Other Rules
+            "better-tailwindcss/enforce-consistent-class-order": [
+                "warn",
+                {
+                    order: "asc",
+                },
+            ],
+            "better-tailwindcss/enforce-consistent-variable-syntax": [
+                "warn",
+                {
+                    syntax: "shorthand",
+                },
+            ],
+            "better-tailwindcss/enforce-consistent-important-position": [
+                "warn",
+                {
+                    position: "recommended",
+                },
+            ],
+            "better-tailwindcss/no-unnecessary-whitespace": "warn",
+            "better-tailwindcss/enforce-shorthand-classes": "warn",
+            "better-tailwindcss/no-duplicate-classes": "warn",
+            "better-tailwindcss/no-deprecated-classes": "warn",
+            "better-tailwindcss/no-conflicting-classes": "warn",
             "simple-import-sort/imports": [
                 "error",
                 {
@@ -108,22 +129,11 @@ const eslintConfig = defineConfig([
             eqeqeq: ["error", "always"],
             "func-name-matching": "error",
             "func-names": ["error", "always"],
-            "func-style": [
-                "error",
-                "expression",
-                {
-                    allowArrowFunctions: true,
-                    allowTypeAnnotation: true,
-                    overrides: {
-                        namedExports: "ignore",
-                    },
-                },
-            ],
             "guard-for-in": "error",
             "id-length": [
                 "error",
                 {
-                    min: 3,
+                    min: 0,
                     max: 30,
                 },
             ],

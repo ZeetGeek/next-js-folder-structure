@@ -13,18 +13,8 @@ const config = {
         "color-hex-length": "long",
         "scss/operator-no-newline-before": null,
         "scss/operator-no-unspaced": null,
-        "at-rule-no-unknown": [
-            true,
-            {
-                ignoreAtRules: ["theme"],
-            },
-        ],
-        "scss/at-rule-no-unknown": [
-            true,
-            {
-                ignoreAtRules: ["theme"],
-            },
-        ],
+        "at-rule-no-unknown": null,
+        "scss/at-rule-no-unknown": null,
         "scss/at-extend-no-missing-placeholder": null,
         "scss/dollar-variable-colon-space-after": null,
         "scss/dollar-variable-colon-space-before": null,
@@ -48,7 +38,6 @@ const config = {
             viewport: ["width", "height"],
             keyframes: ["from", "to"],
             container: ["container-type", "container-name"],
-            layer: ["name"],
         },
         "color-hex-alpha": "never",
         "color-named": "never",

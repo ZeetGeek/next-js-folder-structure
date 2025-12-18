@@ -135,3 +135,9 @@ button {
     @apply bg-background text-foreground;
   }
 }
+
+
+.safari-padding {
+  padding: 1rem;
+  background: #da1717;
+}

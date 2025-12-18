@@ -19,22 +19,9 @@
         "prettier-watch": "onchange \"**/*\" -- prettier --write --ignore-unknown {{changed}}",
         "lint:staged": "lint-staged",
         "prepare": "husky install",
-        "test:e2e": "playwright test",
-        "test:chrome": "playwright test --project=chromium",
-        "test:firefox": "playwright test --project=firefox",
-        "test:safari": "playwright test --project=webkit",
-        "test:e2e:ui": "playwright test --ui",
-        "test:headed": "playwright test --headed",
-        "test:e2e:debug": "playwright test --debug",
-        "test:mobile": "playwright test --project='Mobile Chrome' --project='Mobile Safari'",
-        "test:report": "playwright show-report",
-        "test:codegen": "playwright codegen http://localhost:3000",
-        "test:trace": "playwright show-trace",
-        "test:watch": "playwright test --watch",
-        "test:install": "playwright install chromium firefox webkit",
-        "test:install:ci": "playwright install --with-deps",
-        "test:build": "npm run build && npm start & npm run test:e2e",
-        "test:all-browsers": "playwright test --project=chromium --project=firefox --project=webkit"
+        "open:chrome": "npx playwright cr http://localhost:3000",
+        "open:firefox": "npx playwright ff http://localhost:3000",
+        "open:safari": "npx playwright wk http://localhost:3000"
     },
     "lint-staged": {
         "*.{js,jsx,ts,tsx}": [

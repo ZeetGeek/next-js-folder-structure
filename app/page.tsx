@@ -1,22 +1,36 @@
 import Image from "next/image";
 
-import achromaticImage from "@/public/achromatic.jpg";
+import { getBlurData } from "@/lib/getBlurData";
 
-function Home() {
+async function getImageFromAPI() {
+    const res = await fetch("https://picsum.photos/id/1025/info", {
+        next: { revalidate: 3600 },
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch image");
+    }
+
+    return res.json();
+}
+
+export default async function Home() {
+    const data = await getImageFromAPI();
+    const blurDataURL = await getBlurData(data.download_url);
+
     return (
-        <main>
+        <main style={{ padding: 40 }}>
             <Image
-                alt="achromatic"
-                className="size-100"
-                height={400}
+                alt={`Photo by ${data.author}`}
+                blurDataURL={blurDataURL}
+                height={800}
                 placeholder="blur"
+                priority
                 quality={70}
                 sizes="(max-width: 768px) 100vw, 50vw"
-                src={achromaticImage}
-                width={400}
+                src={data.download_url}
+                width={1200}
             />
         </main>
     );
 }
-
-export default Home;

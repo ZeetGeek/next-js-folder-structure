@@ -6,6 +6,5 @@ export async function getBlurData(imageUrl: string) {
     });
 
     const { base64 } = await getPlaiceholder(buffer);
-
     return base64;
 }

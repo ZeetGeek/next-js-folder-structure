@@ -6,6 +6,13 @@ const nextConfig: NextConfig = {
         formats: ["image/avif", "image/webp"],
         imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
         minimumCacheTTL: 60,
+        remotePatterns: [
+            {
+                hostname: "picsum.photos",
+                pathname: "/**",
+                protocol: "https",
+            },
+        ],
     },
     reactStrictMode: true,
 };

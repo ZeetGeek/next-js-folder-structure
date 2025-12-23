@@ -1,30 +1,89 @@
-"use client";
-
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
-import Hero from "./components/hero";
+// STATIC IMPORT - This component loads immediately with the page
+import Hero from "@/components/hero";
+// Import skeleton components for fallbacks (must be imported before dynamic imports)
+import FeaturesSkeleton from "@/components/skeletons/features-skeleton";
+import StatsSkeleton from "@/components/skeletons/stats-skeleton";
+import TestimonialsSkeleton from "@/components/skeletons/testimonials-skeleton";
 
-const ChartBarInteractive = dynamic(
+// DYNAMIC IMPORTS - These components are code-split and loaded on demand
+// Each dynamic import can have different loading strategies
+
+// Features component with custom loading fallback
+const Features = dynamic(
     () => {
-        return import("@/components/chart");
+        return import("@/components/features");
     },
     {
         loading: () => {
-            return (
-                <div className="bg-card border capitalize h-105.75 p-5 rounded-xl shadow-sm text-card-foreground">
-                    Loading...
-                </div>
-            );
+            return <FeaturesSkeleton />;
         },
-        ssr: false,
+        // Server-side render this component
+        ssr: true,
+    },
+);
+
+// Stats component with custom loading fallback
+const Stats = dynamic(
+    () => {
+        return import("@/components/stats");
+    },
+    {
+        loading: () => {
+            return <StatsSkeleton />;
+        },
+        ssr: true,
+    },
+);
+
+// Testimonials component with custom loading fallback
+const Testimonials = dynamic(
+    () => {
+        return import("@/components/testimonials");
+    },
+    {
+        loading: () => {
+            return <TestimonialsSkeleton />;
+        },
+        ssr: true,
     },
 );
 
 export default function Home() {
     return (
-        <main style={{ padding: 40 }}>
+        <main className="min-h-screen">
+            {/* STATIC IMPORT - Loads immediately, no Suspense needed */}
             <Hero />
-            <ChartBarInteractive />
+
+            {/* DYNAMIC IMPORT with SUSPENSE - Features section */}
+            <Suspense fallback={<FeaturesSkeleton />}>
+                <Features />
+            </Suspense>
+
+            {/* DYNAMIC IMPORT with SUSPENSE - Stats section */}
+            <Suspense fallback={<StatsSkeleton />}>
+                <Stats />
+            </Suspense>
+
+            {/* DYNAMIC IMPORT with SUSPENSE - Testimonials section */}
+            <Suspense fallback={<TestimonialsSkeleton />}>
+                <Testimonials />
+            </Suspense>
+
+            {/* Footer section - also statically imported */}
+            <footer className="bg-muted/50 border-t py-8">
+                <div className="container mx-auto px-4 text-center">
+                    <p className="text-muted-foreground">This landing page demonstrates:</p>
+                    <ul className="flex flex-wrap gap-4 justify-center mt-4 text-sm">
+                        <li className="font-semibold">✓ Static Imports (Hero, Footer)</li>
+                        <li className="font-semibold">✓ Dynamic Imports (Features, Stats, Testimonials)</li>
+                        <li className="font-semibold">✓ Suspense Boundaries</li>
+                        <li className="font-semibold">✓ Skeleton Fallbacks</li>
+                    </ul>
+                </div>
+            </footer>
         </main>
     );
 }

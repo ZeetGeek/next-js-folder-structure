@@ -1,6 +1,8 @@
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 
+// CLIENT COMPONENT WRAPPER - Handles dynamic import with ssr: false
+import ApiUsersWrapper from "@/components/api-users-wrapper";
 // STATIC IMPORT - This component loads immediately with the page
 import Hero from "@/components/hero";
 // Import skeleton components for fallbacks (must be imported before dynamic imports)
@@ -72,13 +74,17 @@ export default function Home() {
                 <Testimonials />
             </Suspense>
 
+            {/* CLIENT COMPONENT - API Users section (wrapper handles Suspense internally) */}
+            <ApiUsersWrapper />
+
             {/* Footer section - also statically imported */}
             <footer className="bg-muted/50 border-t py-8">
                 <div className="container mx-auto px-4 text-center">
                     <p className="text-muted-foreground">This landing page demonstrates:</p>
-                    <ul className="flex flex-wrap gap-4 justify-center mt-4 text-sm">
+                    <ul className="flex flex-wrap gap-4 justify-center mt-4 text-foreground text-sm">
                         <li className="font-semibold">✓ Static Imports (Hero, Footer)</li>
                         <li className="font-semibold">✓ Dynamic Imports (Features, Stats, Testimonials)</li>
+                        <li className="font-semibold">✓ Client Components (API Users with useEffect)</li>
                         <li className="font-semibold">✓ Suspense Boundaries</li>
                         <li className="font-semibold">✓ Skeleton Fallbacks</li>
                     </ul>

@@ -46,17 +46,6 @@
   --radius-4xl: calc(var(--radius) + 1rem);
 }
 
-/* after format */
-body {
-  color: #ffffff;
-  text-transform: uppercase;
-}
-
-button {
-  color: var(--foreground);
-  background: var(--background);
-}
-
 :root {
   --radius: 0.625rem;
   --background: oklch(100% 0 0deg);
@@ -136,8 +125,3 @@ button {
   }
 }
 
-
-.safari-padding {
-  padding: 1rem;
-  background: #da1717;
-}

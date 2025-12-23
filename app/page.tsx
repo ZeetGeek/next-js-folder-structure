@@ -1,36 +1,30 @@
-import Image from "next/image";
+"use client";
 
-import { getBlurData } from "@/lib/getBlurData";
+import dynamic from "next/dynamic";
 
-async function getImageFromAPI() {
-    const res = await fetch("https://picsum.photos/id/1025/info", {
-        next: { revalidate: 3600 },
-    });
+import Hero from "./components/hero";
 
-    if (!res.ok) {
-        throw new Error("Failed to fetch image");
-    }
+const ChartBarInteractive = dynamic(
+    () => {
+        return import("@/components/chart");
+    },
+    {
+        loading: () => {
+            return (
+                <div className="bg-card border capitalize h-105.75 p-5 rounded-xl shadow-sm text-card-foreground">
+                    Loading...
+                </div>
+            );
+        },
+        ssr: false,
+    },
+);
 
-    return res.json();
-}
-
-export default async function Home() {
-    const data = await getImageFromAPI();
-    const blurDataURL = await getBlurData(data.download_url);
-
+export default function Home() {
     return (
         <main style={{ padding: 40 }}>
-            <Image
-                alt={`Photo by ${data.author}`}
-                blurDataURL={blurDataURL}
-                height={800}
-                placeholder="blur"
-                priority
-                quality={70}
-                sizes="(max-width: 768px) 100vw, 50vw"
-                src={data.download_url}
-                width={1200}
-            />
+            <Hero />
+            <ChartBarInteractive />
         </main>
     );
 }

@@ -108,7 +108,6 @@ const eslintConfig = defineConfig([
             "no-unreachable-loop": "error",
             "arrow-body-style": ["warn", "always"],
             "block-scoped-var": "warn",
-            "no-use-before-define": "warn",
             camelcase: [
                 "error",
                 {
@@ -118,8 +117,6 @@ const eslintConfig = defineConfig([
                     ignoreGlobals: false,
                 },
             ],
-            "capitalized-comments": ["error", "always"],
-            "consistent-return": ["error", { treatUndefinedAsUnspecified: true }],
             "no-useless-assignment": "error",
             curly: ["error", "all"],
             "default-case": "error",

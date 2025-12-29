@@ -3,7 +3,7 @@ import Link from "next/link";
 export function Header() {
     return (
         <header className={`backdrop-blur-sm bg-black/80 border-border rder-b sticky text-white top-0 w-full z-50`}>
-            <nav className="container flex h-14 items-center">
+            <nav className="container flex h-14 items-center mx-auto">
                 <div className="flex mr-4">
                     <Link className="flex items-center mr-6 space-x-2" href="/">
                         <span className="font-bold">Next.js Starter Kit</span>

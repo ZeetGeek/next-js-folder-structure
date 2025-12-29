@@ -3,6 +3,7 @@ import { ExternalLink, Package } from "lucide-react";
 import { dependencies } from "@/data/packages/dependencies";
 import { devDependencies } from "@/data/packages/devDependencies";
 import { categories, type PackageItem } from "@/data/packages/types";
+import packageJson from "@/package.json";
 
 function PackageCard({ pkg }: { pkg: PackageItem }) {
     return (
@@ -47,8 +48,48 @@ function PackageCard({ pkg }: { pkg: PackageItem }) {
 }
 
 export default function PackagesPage() {
-    const allPackages = [...dependencies, ...devDependencies];
-    const packagesByCategory = categories.map(category => {
+    const usehooksPackage: PackageItem = {
+        category: "Data Fetching & State",
+        description: "Collection of modern, copy‑paste friendly React hooks",
+        name: "@uidotdev/usehooks",
+        npmUrl: "https://www.npmjs.com/package/@uidotdev/usehooks",
+        type: "dependency",
+        version: packageJson.dependencies?.["@uidotdev/usehooks"] ?? "unknown",
+    };
+
+    const basePackages = [...dependencies, ...devDependencies];
+    const allPackages =
+        (
+            basePackages.some(pkg => {
+                return pkg.name === usehooksPackage.name;
+            })
+        ) ?
+            basePackages
+        :   [usehooksPackage, ...basePackages];
+
+    const productionPackages = allPackages.filter(pkg => {
+        return pkg.type === "dependency";
+    });
+    const developmentPackages = allPackages.filter(pkg => {
+        return pkg.type === "devDependency";
+    });
+
+    const baseCategories = [...categories];
+    const categoriesInUse = Array.from(
+        new Set(
+            allPackages.map(pkg => {
+                return pkg.category;
+            }),
+        ),
+    );
+    const orderedCategories = [
+        ...baseCategories,
+        ...categoriesInUse.filter(category => {
+            return !baseCategories.includes(category);
+        }),
+    ];
+
+    const packagesByCategory = orderedCategories.map(category => {
         return {
             category,
             packages: allPackages.filter(pkg => {
@@ -69,11 +110,11 @@ export default function PackagesPage() {
                     <div className="flex flex-wrap gap-4 justify-center">
                         <div className="bg-gray-900 border border-gray-800 px-4 py-2 rounded-lg">
                             <span className="text-gray-400 text-sm">Production: </span>
-                            <span className="font-semibold text-white">{dependencies.length}</span>
+                            <span className="font-semibold text-white">{productionPackages.length}</span>
                         </div>
                         <div className="bg-gray-900 border border-gray-800 px-4 py-2 rounded-lg">
                             <span className="text-gray-400 text-sm">Development: </span>
-                            <span className="font-semibold text-white">{devDependencies.length}</span>
+                            <span className="font-semibold text-white">{developmentPackages.length}</span>
                         </div>
                         <div className="bg-gray-900 border border-gray-800 px-4 py-2 rounded-lg">
                             <span className="text-gray-400 text-sm">Total: </span>

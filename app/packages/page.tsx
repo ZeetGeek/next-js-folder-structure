@@ -7,7 +7,13 @@ import packageJson from "@/package.json";
 
 function PackageCard({ pkg }: { pkg: PackageItem }) {
     return (
-        <div className="bg-gray-900 border border-gray-800 hover:border-gray-700 p-4 rounded-lg transition-colors">
+        <div
+            className={`
+              bg-neutral-900 border border-neutral-800
+              hover:border-neutral-700
+              p-4 rounded-lg transition-colors
+            `}
+        >
             <div className="flex gap-2 items-start justify-between mb-2">
                 <div className="flex-1">
                     <div className="flex gap-2 items-center mb-1">
@@ -30,10 +36,10 @@ function PackageCard({ pkg }: { pkg: PackageItem }) {
                             {pkg.type === "dependency" ? "dep" : "dev"}
                         </span>
                     </div>
-                    <div className="mb-2 text-gray-400 text-xs">{pkg.version}</div>
+                    <div className="mb-2 text-neutral-400 text-xs">{pkg.version}</div>
                 </div>
                 <a
-                    className="hover:text-blue-400 text-gray-500 transition-colors"
+                    className="hover:text-blue-400 text-neutral-500 transition-colors"
                     href={pkg.npmUrl}
                     rel="noopener noreferrer"
                     target="_blank"
@@ -42,7 +48,7 @@ function PackageCard({ pkg }: { pkg: PackageItem }) {
                     <ExternalLink className="size-4" />
                 </a>
             </div>
-            <p className="text-gray-300 text-sm">{pkg.description}</p>
+            <p className="text-neutral-300 text-sm">{pkg.description}</p>
         </div>
     );
 }
@@ -74,7 +80,7 @@ export default function PackagesPage() {
         return pkg.type === "devDependency";
     });
 
-    const baseCategories = [...categories];
+    const baseCategories: readonly string[] = categories;
     const categoriesInUse = Array.from(
         new Set(
             allPackages.map(pkg => {
@@ -104,20 +110,20 @@ export default function PackagesPage() {
                 {/* Header */}
                 <div className="mb-12 text-center">
                     <h1 className="font-bold mb-4 md:text-5xl text-4xl text-white">Package Ecosystem</h1>
-                    <p className="mb-6 text-gray-300 text-lg">
+                    <p className="mb-6 text-lg text-neutral-300">
                         Complete overview of all dependencies and development tools included in this starter kit
                     </p>
                     <div className="flex flex-wrap gap-4 justify-center">
-                        <div className="bg-gray-900 border border-gray-800 px-4 py-2 rounded-lg">
-                            <span className="text-gray-400 text-sm">Production: </span>
+                        <div className="bg-neutral-900 border border-neutral-800 px-4 py-2 rounded-lg">
+                            <span className="text-neutral-400 text-sm">Production: </span>
                             <span className="font-semibold text-white">{productionPackages.length}</span>
                         </div>
-                        <div className="bg-gray-900 border border-gray-800 px-4 py-2 rounded-lg">
-                            <span className="text-gray-400 text-sm">Development: </span>
+                        <div className="bg-neutral-900 border border-neutral-800 px-4 py-2 rounded-lg">
+                            <span className="text-neutral-400 text-sm">Development: </span>
                             <span className="font-semibold text-white">{developmentPackages.length}</span>
                         </div>
-                        <div className="bg-gray-900 border border-gray-800 px-4 py-2 rounded-lg">
-                            <span className="text-gray-400 text-sm">Total: </span>
+                        <div className="bg-neutral-900 border border-neutral-800 px-4 py-2 rounded-lg">
+                            <span className="text-neutral-400 text-sm">Total: </span>
                             <span className="font-semibold text-white">{allPackages.length}</span>
                         </div>
                     </div>
@@ -134,7 +140,7 @@ export default function PackagesPage() {
                                         {category}
                                         <span
                                             className={`
-                                              bg-gray-800 font-normal px-2 py-1 rounded-sm text-gray-400 text-sm
+                                              bg-neutral-800 font-normal px-2 py-1 rounded-sm text-neutral-400 text-sm
                                             `}
                                         >
                                             {packages.length}
